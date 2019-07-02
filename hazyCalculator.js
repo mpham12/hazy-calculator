@@ -1,14 +1,18 @@
 function isSkippedValue(value) {
-  return !value
+  let skipped = [undefined, ""]
+  return skipped.includes(value)
 }
 
 function isNumericValue(value) {
-  return !isNaN(value)
+  
+  return !isNaN(value) && value!== ''
 }
 
 function isNothingValue(value) {
-  return value === null || value=== undefined
+  const nothing = [undefined, null]
+  return nothing.includes(value)
 }
+
 
 function isAcceptableValue(value) {
   const operators = ['+', '-', '*', '/']
@@ -28,7 +32,7 @@ function performCalculationStep(firstOperand, operator, secondOperand) {
     case '/':
       return firstOperand / secondOperand
     default:
-      throw new Error('Invalid Operator input!')
+      throw new Error('Invalid input!')
   }
 }
 
@@ -38,7 +42,6 @@ module.exports.calculate = function (calculationSteps) {
   
 
   calculationSteps.forEach(nextCalculationStep => {
-    console.log(calculationSteps)
 
     if (!isAcceptableValue(nextCalculationStep)) {
       throw new Error('Invalid input!')
@@ -56,6 +59,7 @@ module.exports.calculate = function (calculationSteps) {
       operator = null
 
     } else if (!isSkippedValue(nextCalculationStep)) {
+     
       throw new Error('Invalid input!')
     }
   })
